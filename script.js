@@ -27,8 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentWords = [];
     let currentIndex = 0;
     let score = 0;
+    
+    // 🌟 설정: 기본적으로 음성은 꺼짐(false)
     let settings = {
         isBlurMode: false,
+        isVoiceOn: false, 
         questionCount: 10
     };
 
@@ -41,14 +44,43 @@ document.addEventListener('DOMContentLoaded', () => {
     const imgArea = document.getElementById('image-area');
     const imgEl = document.getElementById('word-image');
 
-    // 한국어 발음 함수 (TTS)
+    // ---------------------------------------------
+    // 🔊 음성(TTS) 로직
+    // ---------------------------------------------
+    let voices = [];
+
+    function loadVoices() {
+        voices = window.speechSynthesis.getVoices();
+    }
+    
+    if (window.speechSynthesis) {
+        loadVoices();
+        if (window.speechSynthesis.onvoiceschanged !== undefined) {
+            window.speechSynthesis.onvoiceschanged = loadVoices;
+        }
+    }
+
     function speakKorean(text) {
-        if (!window.speechSynthesis) return;
+        // 설정이 꺼져있으면 소리 안 냄
+        if (!settings.isVoiceOn || !window.speechSynthesis) return;
+
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'ko-KR';
-        utterance.rate = 0.9;
+        utterance.rate = 1.0; 
+        utterance.pitch = 1.1; // 약간 높은 톤 (젊은 여성 느낌)
+
+        // Google 한국어 음성이 있으면 그것을 사용
+        const targetVoice = voices.find(v => v.lang === 'ko-KR' && v.name.includes('Google')) 
+                         || voices.find(v => v.lang === 'ko-KR');
+
+        if (targetVoice) {
+            utterance.voice = targetVoice;
+        }
+
+        window.speechSynthesis.cancel(); 
         window.speechSynthesis.speak(utterance);
     }
+
 
     // ---------------------------------------------
     // 이벤트 리스너
@@ -62,44 +94,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. 다크모드 & 블러모드 토글
-    document.getElementById('toggle-dark-mode').addEventListener('click', function() {
+    // 2. 다크모드 & 블러모드
+    document.getElementById('toggle-dark-mode').onclick = function() {
         document.body.classList.toggle('dark-mode');
         this.classList.toggle('active');
-    });
+    };
 
-    document.getElementById('toggle-blur-mode').addEventListener('click', function() {
+    document.getElementById('toggle-blur-mode').onclick = function() {
         settings.isBlurMode = !settings.isBlurMode;
         this.classList.toggle('active');
-    });
+    };
 
-    // 3. 문제 수 설정 (막대바 로직)
-    const segmentBtns = document.querySelectorAll('.segment-btn');
-    segmentBtns.forEach(btn => {
+    // 🌟 3. 보이스 모드 토글 (기본 OFF -> 클릭 시 ON)
+    document.getElementById('toggle-voice-mode').onclick = function() {
+        settings.isVoiceOn = !settings.isVoiceOn;
+        this.classList.toggle('active');
+        // 텍스트 변경: 켜지면 "Voice", 꺼지면 "Mute"
+        this.innerText = settings.isVoiceOn ? "🔊 Voice" : "🔇 Mute";
+    };
+
+    // 4. 문제 수 설정
+    document.querySelectorAll('.segment-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            // 다른 버튼 active 제거
-            segmentBtns.forEach(b => b.classList.remove('active'));
-            // 클릭한 버튼 active 추가
+            document.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            // 값 업데이트
             settings.questionCount = parseInt(btn.getAttribute('data-value'));
         });
     });
 
-    // 4. 게임 진행 관련
-    document.getElementById('submit-btn').addEventListener('click', checkAnswer);
-    document.getElementById('answer-input').addEventListener('keypress', (e) => {
+    // 5. 게임 진행
+    document.getElementById('submit-btn').onclick = checkAnswer;
+    document.getElementById('answer-input').onkeypress = (e) => {
         if(e.key === 'Enter') checkAnswer();
-    });
+    };
     
-    imgArea.addEventListener('click', () => {
+    // 이미지 클릭
+    imgArea.onclick = () => {
         if(settings.isBlurMode) imgArea.classList.remove('blurred');
-        speakKorean(document.getElementById('korean-word').innerText); // 이미지 클릭 시에도 발음
-    });
+        speakKorean(document.getElementById('korean-word').innerText);
+    };
 
-    document.getElementById('restart-btn').addEventListener('click', () => {
-        showScreen('main');
-    });
+    document.getElementById('restart-btn').onclick = () => showScreen('main');
 
 
     // ---------------------------------------------
@@ -130,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('feedback').innerText = "";
         document.getElementById('answer-input').focus();
 
-        // 발음 실행
+        // 설정이 켜져있을 때만 읽음
         speakKorean(word.ko);
 
         imgArea.classList.remove('blurred');
