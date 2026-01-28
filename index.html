@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Word Master | Visual Korean Vocabulary</title>
+    <link rel="stylesheet" href="style.css">
+    
+    </head>
+<body>
+
+<div class="app-container">
+
+    <div id="main-screen" class="screen active">
+        <header>
+            <h1 class="logo">🇰🇷 K-Word Master</h1>
+            <p>The Most Effective Way to Learn Korean</p>
+        </header>
+
+        <div class="ad-banner">
+            <span>Google Ad (Top Banner)</span>
+        </div>
+
+        <div class="dashboard-grid">
+            
+            <div class="card big-card">
+                <h3>⚙️ Study Settings</h3>
+                
+                <div class="setting-grid">
+                    <button id="toggle-dark-mode" class="option-btn">🌙 Dark</button>
+                    <button id="toggle-blur-mode" class="option-btn">💧 Blur</button>
+                </div>
+
+                <div class="setting-group">
+                    <label>Questions per Round</label>
+                    <div class="segmented-control">
+                        <button class="segment-btn" data-value="5">5</button>
+                        <button class="segment-btn active" data-value="10">10</button>
+                        <button class="segment-btn" data-value="20">20</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card big-card">
+                <h3>Select Level to Start</h3>
+                <div class="level-grid">
+                    <button class="level-btn easy" data-level="easy">
+                        <span class="icon">🐣</span>
+                        <div class="btn-text-group">
+                            <span class="text">Easy</span>
+                            <span class="sub">Basic Nouns</span>
+                        </div>
+                    </button>
+                    <button class="level-btn normal" data-level="normal">
+                        <span class="icon">🚶</span>
+                        <div class="btn-text-group">
+                            <span class="text">Normal</span>
+                            <span class="sub">Daily Life</span>
+                        </div>
+                    </button>
+                    <button class="level-btn hard" data-level="hard">
+                        <span class="icon">🔥</span>
+                        <div class="btn-text-group">
+                            <span class="text">Hard</span>
+                            <span class="sub">Abstract</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+        </div> <div class="ad-banner">
+            <span>Google Ad (Bottom Banner)</span>
+        </div>
+
+        <section class="content-section">
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="icon-box">🧠</div>
+                    <h4>Visual Science</h4>
+                    <p>Our brain processes images 60,000x faster than text.</p>
+                </div>
+                <div class="info-card">
+                    <div class="icon-box">🔁</div>
+                    <h4>Spaced Repetition</h4>
+                    <p>Reviewing vocabulary at intervals moves words to long-term memory.</p>
+                </div>
+                <div class="info-card">
+                    <div class="icon-box">🗣️</div>
+                    <h4>Active Recall</h4>
+                    <p>Say the word out loud before checking the answer.</p>
+                </div>
+            </div>
+
+            <div class="faq-section">
+                <h3>FAQ</h3>
+                <div class="faq-item">
+                    <h5>Q: Is K-Word Master free?</h5>
+                    <p>A: Yes, it is 100% free.</p>
+                </div>
+                <div class="faq-item">
+                    <h5>Q: Are these TOPIK words?</h5>
+                    <p>A: Yes, based on TOPIK I & II lists.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="quiz-screen" class="screen">
+        <div class="quiz-container-max"> <div class="quiz-header">
+                <span id="level-badge">LEVEL</span>
+                <span>Q: <span id="current-q">1</span> / <span id="total-q">10</span></span>
+            </div>
+
+            <div class="ad-banner small-banner"><span>Google Ad (Small)</span></div>
+
+            <div class="card quiz-card">
+                <div class="image-area" id="image-area">
+                    <img id="word-image" src="" alt="Quiz Image">
+                    <div class="blur-overlay">Tap to Reveal</div>
+                </div>
+                <h2 id="korean-word">---</h2>
+                <div class="input-area">
+                    <input type="text" id="answer-input" placeholder="Meaning..." autocomplete="off">
+                    <button id="submit-btn">Check</button>
+                </div>
+                <p id="feedback"></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="result-screen" class="screen">
+        <div class="quiz-container-max">
+            <div class="card result-card">
+                <h2>🎉 Complete!</h2>
+                <div class="score-circle">
+                    <span id="final-score">0</span>
+                    <span class="total">/ <span id="final-total">10</span></span>
+                </div>
+                <p id="result-message"></p>
+                <button id="restart-btn" class="restart-btn">🏠 Back to Home</button>
+            </div>
+            <div class="ad-banner rect-banner"><span>Google Ad (Rectangle)</span></div>
+        </div>
+    </div>
+
+</div>
+
+<footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2026 K-Word Master. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#">Privacy</a> | <a href="#">Terms</a> | <a href="#">Contact</a>
+        </div>
+        <p class="disclaimer">Images provided by Pixabay API.</p>
+    </div>
+</footer>
+
+<script src="script.js" defer></script>
+</body>
+</html>
