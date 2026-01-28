@@ -41,6 +41,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const imgArea = document.getElementById('image-area');
     const imgEl = document.getElementById('word-image');
 
+    // 한국어 발음 함수 (TTS)
+    function speakKorean(text) {
+        if (!window.speechSynthesis) return;
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ko-KR';
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+    }
+
     // ---------------------------------------------
     // 이벤트 리스너
     // ---------------------------------------------
@@ -85,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     imgArea.addEventListener('click', () => {
         if(settings.isBlurMode) imgArea.classList.remove('blurred');
+        speakKorean(document.getElementById('korean-word').innerText); // 이미지 클릭 시에도 발음
     });
 
     document.getElementById('restart-btn').addEventListener('click', () => {
@@ -119,6 +129,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('answer-input').value = "";
         document.getElementById('feedback').innerText = "";
         document.getElementById('answer-input').focus();
+
+        // 발음 실행
+        speakKorean(word.ko);
 
         imgArea.classList.remove('blurred');
         if (settings.isBlurMode) imgArea.classList.add('blurred');
