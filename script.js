@@ -1,26 +1,57 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 🔥 [필수] Pixabay API 키 입력
+    // 🔥 [필수] 본인의 Pixabay API 키를 입력하세요
     const API_KEY = '54407874-ab38c3c61a6b68f3cbab3daf1'; 
 
+    // 🌟 [업데이트] 단어 데이터 대폭 추가 (약 100개 이상)
     const wordData = {
         easy: [
-            {ko:"사과",en:"apple"}, {ko:"개",en:"dog"}, {ko:"고양이",en:"cat"}, 
-            {ko:"물",en:"water"}, {ko:"집",en:"house"}, {ko:"차",en:"car"}, 
-            {ko:"나무",en:"tree"}, {ko:"책",en:"book"}, {ko:"돈",en:"money"},
-            {ko:"별",en:"star"}, {ko:"달",en:"moon"}, {ko:"해",en:"sun"}
+            // [기초 사물/자연/신체] - 총 40개
+            {ko:"사람",en:"person"}, {ko:"집",en:"house"}, {ko:"물",en:"water"}, 
+            {ko:"밥",en:"rice"}, {ko:"나무",en:"tree"}, {ko:"돈",en:"money"}, 
+            {ko:"차",en:"car"}, {ko:"옷",en:"clothes"}, {ko:"눈",en:"eye"}, 
+            {ko:"비",en:"rain"}, {ko:"산",en:"mountain"}, {ko:"달",en:"moon"},
+            {ko:"꽃",en:"flower"}, {ko:"손",en:"hand"}, {ko:"발",en:"foot"},
+            {ko:"가방",en:"bag"}, {ko:"모자",en:"hat"}, {ko:"안경",en:"glasses"},
+            {ko:"책상",en:"desk"}, {ko:"의자",en:"chair"},
+            // (추가된 단어들)
+            {ko:"사과",en:"apple"}, {ko:"빵",en:"bread"}, {ko:"우유",en:"milk"},
+            {ko:"고기",en:"meat"}, {ko:"개",en:"dog"}, {ko:"고양이",en:"cat"},
+            {ko:"새",en:"bird"}, {ko:"물고기",en:"fish"}, {ko:"해",en:"sun"},
+            {ko:"별",en:"star"}, {ko:"구름",en:"cloud"}, {ko:"바다",en:"sea"},
+            {ko:"강",en:"river"}, {ko:"얼굴",en:"face"}, {ko:"머리",en:"head"},
+            {ko:"다리",en:"leg"}, {ko:"팔",en:"arm"}, {ko:"시계",en:"clock"},
+            {ko:"전화기",en:"phone"}, {ko:"침대",en:"bed"}
         ],
         normal: [
-            {ko:"학교",en:"school"}, {ko:"친구",en:"friend"}, {ko:"가족",en:"family"}, 
-            {ko:"여름",en:"summer"}, {ko:"겨울",en:"winter"}, {ko:"음악",en:"music"}, 
-            {ko:"시간",en:"time"}, {ko:"공원",en:"park"}, {ko:"지하철",en:"subway"},
-            {ko:"비행기",en:"airplane"}, {ko:"도서관",en:"library"}
+            // [생활/장소/교통/직업] - 총 36개
+            {ko:"학교",en:"school"}, {ko:"병원",en:"hospital"}, {ko:"회사",en:"company"},
+            {ko:"시장",en:"market"}, {ko:"도서관",en:"library"}, {ko:"공원",en:"park"},
+            {ko:"지하철",en:"subway"}, {ko:"버스",en:"bus"}, {ko:"비행기",en:"airplane"},
+            {ko:"자전거",en:"bicycle"}, {ko:"친구",en:"friend"}, {ko:"가족",en:"family"},
+            {ko:"선생님",en:"teacher"}, {ko:"경찰",en:"police"}, {ko:"의사",en:"doctor"},
+            {ko:"김치",en:"kimchi"}, {ko:"라면",en:"ramen"}, {ko:"커피",en:"coffee"},
+            // (추가된 단어들)
+            {ko:"은행",en:"bank"}, {ko:"식당",en:"restaurant"}, {ko:"화장실",en:"bathroom"},
+            {ko:"방",en:"room"}, {ko:"문",en:"door"}, {ko:"창문",en:"window"},
+            {ko:"컴퓨터",en:"computer"}, {ko:"텔레비전",en:"television"}, {ko:"카메라",en:"camera"},
+            {ko:"사진",en:"photo"}, {ko:"노래",en:"song"}, {ko:"영화",en:"movie"},
+            {ko:"여름",en:"summer"}, {ko:"겨울",en:"winter"}, {ko:"아침",en:"morning"},
+            {ko:"밤",en:"night"}, {ko:"사랑",en:"love"}, {ko:"꿈",en:"dream"}
         ],
         hard: [
-            {ko:"우주",en:"universe"}, {ko:"경제",en:"economy"}, {ko:"자유",en:"freedom"}, 
-            {ko:"과학",en:"science"}, {ko:"환경",en:"environment"}, {ko:"전통",en:"tradition"}, 
-            {ko:"정부",en:"government"}, {ko:"책임",en:"responsibility"},
-            {ko:"감정",en:"emotion"}, {ko:"기억",en:"memory"}
+            // [사회/추상/고급] - 총 30개
+            {ko:"세계",en:"world"}, {ko:"정부",en:"government"}, {ko:"환경",en:"environment"},
+            {ko:"우주",en:"universe"}, {ko:"대통령",en:"president"}, {ko:"전쟁",en:"war"},
+            {ko:"평화",en:"peace"}, {ko:"결혼",en:"marriage"}, {ko:"신문",en:"newspaper"},
+            {ko:"약",en:"medicine"}, {ko:"쓰레기",en:"garbage"}, {ko:"비밀",en:"secret"},
+            {ko:"여권",en:"passport"}, {ko:"공항",en:"airport"}, {ko:"지갑",en:"wallet"},
+            // (추가된 단어들)
+            {ko:"경제",en:"economy"}, {ko:"문화",en:"culture"}, {ko:"역사",en:"history"},
+            {ko:"미래",en:"future"}, {ko:"과거",en:"past"}, {ko:"성공",en:"success"},
+            {ko:"실패",en:"failure"}, {ko:"법",en:"law"}, {ko:"예술",en:"art"},
+            {ko:"과학",en:"science"}, {ko:"건강",en:"health"}, {ko:"안전",en:"safety"},
+            {ko:"문제",en:"problem"}, {ko:"해결",en:"solution"}, {ko:"자유",en:"freedom"}
         ]
     };
 
@@ -28,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentIndex = 0;
     let score = 0;
     
-    // 🌟 설정: 기본적으로 음성은 꺼짐(false)
+    // 설정: 기본적으로 음성은 꺼짐(false)
     let settings = {
         isBlurMode: false,
         isVoiceOn: false, 
@@ -43,6 +74,17 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const imgArea = document.getElementById('image-area');
     const imgEl = document.getElementById('word-image');
+
+    // ---------------------------------------------
+    // 🎲 피셔-예이츠 셔플 (랜덤 섞기)
+    // ---------------------------------------------
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
 
     // ---------------------------------------------
     // 🔊 음성(TTS) 로직
@@ -61,15 +103,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function speakKorean(text) {
-        // 설정이 꺼져있으면 소리 안 냄
         if (!settings.isVoiceOn || !window.speechSynthesis) return;
 
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'ko-KR';
         utterance.rate = 1.0; 
-        utterance.pitch = 1.1; // 약간 높은 톤 (젊은 여성 느낌)
+        utterance.pitch = 1.1; 
 
-        // Google 한국어 음성이 있으면 그것을 사용
         const targetVoice = voices.find(v => v.lang === 'ko-KR' && v.name.includes('Google')) 
                          || voices.find(v => v.lang === 'ko-KR');
 
@@ -105,11 +145,10 @@ document.addEventListener('DOMContentLoaded', () => {
         this.classList.toggle('active');
     };
 
-    // 🌟 3. 보이스 모드 토글 (기본 OFF -> 클릭 시 ON)
+    // 3. 보이스 모드 토글
     document.getElementById('toggle-voice-mode').onclick = function() {
         settings.isVoiceOn = !settings.isVoiceOn;
         this.classList.toggle('active');
-        // 텍스트 변경: 켜지면 "Voice", 꺼지면 "Mute"
         this.innerText = settings.isVoiceOn ? "🔊 Voice" : "🔇 Mute";
     };
 
@@ -122,13 +161,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 5. 게임 진행
+    // 5. 정답 확인
     document.getElementById('submit-btn').onclick = checkAnswer;
     document.getElementById('answer-input').onkeypress = (e) => {
         if(e.key === 'Enter') checkAnswer();
     };
     
-    // 이미지 클릭
     imgArea.onclick = () => {
         if(settings.isBlurMode) imgArea.classList.remove('blurred');
         speakKorean(document.getElementById('korean-word').innerText);
@@ -142,9 +180,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---------------------------------------------
 
     function startGame(level) {
-        const allWords = [...wordData[level]].sort(() => Math.random() - 0.5);
-        currentWords = allWords.slice(0, settings.questionCount);
-        if(currentWords.length === 0) currentWords = allWords;
+        // 해당 레벨의 전체 단어를 복사
+        const allWords = [...wordData[level]];
+        
+        // 🎲 무작위 셔플
+        const shuffledWords = shuffleArray(allWords);
+        
+        // 설정된 문제 수만큼 자르기 (데이터보다 문제 수가 많으면 전체 사용)
+        currentWords = shuffledWords.slice(0, settings.questionCount);
+        if(currentWords.length === 0) currentWords = shuffledWords;
 
         currentIndex = 0;
         score = 0;
@@ -165,7 +209,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('feedback').innerText = "";
         document.getElementById('answer-input').focus();
 
-        // 설정이 켜져있을 때만 읽음
         speakKorean(word.ko);
 
         imgArea.classList.remove('blurred');
@@ -174,6 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
         imgEl.src = "https://via.placeholder.com/400x300?text=Loading...";
 
         try {
+            // 이미지 검색
             const res = await fetch(`https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(word.en)}&image_type=photo&safesearch=true`);
             const data = await res.json();
             
