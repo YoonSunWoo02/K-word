@@ -26,7 +26,6 @@ body {
     min-height: 100vh;
 }
 
-/* 앱 컨테이너 */
 .app-container {
     width: 100%;
     max-width: 900px;
@@ -37,7 +36,6 @@ body {
     flex-direction: column;
 }
 
-/* 헤더 */
 header { text-align: center; margin: 30px 0; }
 .logo { font-size: 2.5rem; margin: 0; color: var(--primary); font-weight: 900; letter-spacing: -1px; }
 header p { color: #888; margin-top: 10px; font-size: 1rem; }
@@ -56,7 +54,6 @@ header p { color: #888; margin-top: 10px; font-size: 1rem; }
     }
 }
 
-/* 카드 공통 */
 .card {
     background: var(--card-bg);
     border-radius: 20px;
@@ -67,11 +64,18 @@ header p { color: #888; margin-top: 10px; font-size: 1rem; }
 }
 h3 { margin-top: 0; margin-bottom: 20px; color: #555; font-size: 1.1rem; }
 
-/* 설정 버튼들 */
-.setting-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+/* 설정 버튼 그리드 */
+.setting-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr 1fr; 
+    gap: 10px; 
+    margin-bottom: 20px; 
+}
+
 .option-btn {
     padding: 12px; background: var(--gray-bg); border: none; border-radius: 12px;
     font-weight: bold; color: var(--text); cursor: pointer; transition: 0.2s;
+    font-size: 0.9rem;
 }
 .option-btn.active { background: var(--primary); color: white; }
 
@@ -100,21 +104,27 @@ h3 { margin-top: 0; margin-bottom: 20px; color: #555; font-size: 1.1rem; }
 .normal { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #333 !important; }
 .hard { background: linear-gradient(135deg, #e74c3c, #c0392b); }
 
-/* =========================================
-   📈 블로그 & SEO 섹션 스타일 (NEW)
-   ========================================= */
+/* 블로그 섹션 */
 .blog-section { width: 100%; margin-top: 60px; margin-bottom: 40px; }
 .section-header { text-align: center; margin-bottom: 30px; }
 .section-header h2 { font-size: 2rem; color: var(--text); margin-bottom: 10px; }
 .section-header p { color: #888; font-size: 1.1rem; }
 
-/* 블로그 그리드 */
+/* 🌟 [수정됨] 블로그 그리드: 2x2 스타일 강제 적용 */
 .blog-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: 1fr; /* 모바일: 1줄 */
     gap: 25px;
     margin-bottom: 50px;
 }
+
+@media (min-width: 600px) {
+    .blog-grid {
+        /* 화면이 넓어지면 무조건 2개씩 배치 (2x2 Grid) */
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+
 .blog-card {
     background: var(--card-bg); border-radius: 20px; overflow: hidden;
     box-shadow: var(--shadow); transition: transform 0.3s ease;
@@ -122,20 +132,20 @@ h3 { margin-top: 0; margin-bottom: 20px; color: #555; font-size: 1.1rem; }
     border: 1px solid rgba(0,0,0,0.05);
 }
 .blog-card:hover { transform: translateY(-8px); }
-.blog-thumb { width: 100%; height: 180px; background-size: cover; background-position: center; border-bottom: 1px solid #eee; }
-.blog-content { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
+.blog-thumb { width: 100%; height: 160px; background-size: cover; background-position: center; border-bottom: 1px solid #eee; }
+.blog-content { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
 .category { font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; margin-bottom: 10px; }
-.blog-content h4 { margin: 0 0 10px 0; font-size: 1.25rem; color: var(--text); line-height: 1.4; }
-.blog-content p { font-size: 0.95rem; color: #666; line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
-.read-more { font-weight: bold; color: var(--primary); text-decoration: none; font-size: 0.9rem; }
+.blog-content h4 { margin: 0 0 10px 0; font-size: 1.1rem; color: var(--text); line-height: 1.4; }
+.blog-content p { font-size: 0.9rem; color: #666; line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
+.read-more { font-weight: bold; color: var(--primary); text-decoration: none; font-size: 0.85rem; }
 
-/* SEO 텍스트 박스 */
+/* SEO 텍스트 */
 .seo-text-box { background: rgba(255,255,255,0.6); padding: 40px; border-radius: 20px; margin-bottom: 50px; border: 1px solid rgba(0,0,0,0.05); }
 .seo-text-box h3 { margin-top: 0; color: var(--text); }
 .seo-text-box p { line-height: 1.8; color: #555; }
 .seo-text-box strong { color: var(--primary); }
 
-/* FAQ 디자인 */
+/* FAQ */
 .faq-container { background: var(--card-bg); padding: 40px; border-radius: 25px; box-shadow: var(--shadow); }
 .faq-container h3 { text-align: center; margin-top: 0; margin-bottom: 30px; font-size: 1.8rem; }
 .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
